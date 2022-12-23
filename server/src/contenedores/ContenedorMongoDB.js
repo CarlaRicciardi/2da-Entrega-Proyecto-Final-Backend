@@ -1,3 +1,7 @@
+import {connect} from "mongoose";
+import {Cart} from '../models/modelCarritos.ja'
+import {Product} from '../models/modelProductos.js'
+
 async function connectMG() {
   try {
     await connect(
@@ -15,7 +19,9 @@ await connectMG();
 console.log('conectado!!!');
 
 class ContenedorMongoDB {
-  constructor() {}
+  constructor(schema) {
+    this.schema = mongoose.model(schema)
+  }
 }
 
 export default ContenedorMongoDB;

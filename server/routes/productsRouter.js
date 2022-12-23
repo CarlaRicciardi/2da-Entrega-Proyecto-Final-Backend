@@ -1,12 +1,12 @@
-const express = require('express');
+import express from 'express';
 const { Router } = express;
 const productsRouter = Router();
 
 // const Container = require('../classContenedor');
 // const products = new Container('./data/products.json');
 
-import instancia from '../src/daos/index.js';
-const producto = new instancia.producto();
+import result from '../src/daos/index.js';
+const producto = new result.producto();
 
 //middleware
 let isAdmin = true;

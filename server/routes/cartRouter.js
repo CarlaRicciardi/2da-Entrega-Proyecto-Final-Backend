@@ -8,9 +8,8 @@ const cartRouter = Router();
 // const container = require('../classContenedor');
 // const product = new container('./data/products.json');
 
-import instancia from '../src/daos/index.js';
-
-const carrito = new instancia.carrito();
+import result from '../src/daos/index.js';
+const carrito = new result.carrito();
 
 cartRouter.post('/', async (req, res) => {
   const { name, description, cod, img, price, stock, id } = req.body;
