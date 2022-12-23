@@ -86,4 +86,4 @@ productsRouter.delete('/:id', middlewareAdmin, async (req, res) => {
   }
 });
 
-module.exports = productsRouter;
+export default productsRouter;

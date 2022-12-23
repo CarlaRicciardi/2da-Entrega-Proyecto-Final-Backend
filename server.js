@@ -3,16 +3,15 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 import productsRouter from './server/routes/productsRouter';
-import cartRouter from './server/routes/cart';
+app.use('/api/productos', productsRouter);
+
+import cartRouter from './server/routes/cartRouter';
+app.use('/api/carrito', cartRouter);
 
 //middlewares
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/static', express.static(__dirname + '/client'));
-
-//routes
-app.use('/api/productos', productsRouter);
-app.use('/api/carrito', cartRouter);
 
 const cors = require('cors');
 app.use(cors({ origin: '*' }));

@@ -1,4 +1,4 @@
-const fs = require('fs');
+import { promises as fs } from 'fs';
 
 class ContenedorArchivo {
   constructor(ruta) {

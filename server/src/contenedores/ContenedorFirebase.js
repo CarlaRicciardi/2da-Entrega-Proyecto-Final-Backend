@@ -9,8 +9,6 @@ admin.initializeApp({
 const { getFirestore } = require('firebase-admin/firestore');
 const db = getFirestore();
 
-console.log('se conecto a firebase');
-
 class ContenedorFirebase {
   constructor(collectionName) {
     this.collection = db.collection(collectionName);

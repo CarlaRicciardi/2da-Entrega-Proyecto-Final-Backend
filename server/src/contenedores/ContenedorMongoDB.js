@@ -14,8 +14,8 @@ console.log('conectanto...');
 await connectMG();
 console.log('conectado!!!');
 
-// class ContenedorMongoDB {
-//   constructor() {
+class ContenedorMongoDB {
+  constructor() {}
+}
 
-//   }
-// }
+export default ContenedorMongoDB;

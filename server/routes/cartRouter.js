@@ -56,4 +56,4 @@ cartRouter.delete('/:id/productos/:id_prod', async (req, res) => {
     : res.json({ error: 'cart not found' });
 });
 
-module.exports = cartRouter;
+export default cartRouter;
