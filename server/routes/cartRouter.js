@@ -2,14 +2,8 @@ import express from 'express';
 const { Router } = express;
 const cartRouter = Router();
 
-// const classCarrito = require('../classCart');
-// const cart = new classCarrito('./data/carrito.json');
-
-// const container = require('../classContenedor');
-// const product = new container('./data/products.json');
-
 import result from '../src/daos/index.js';
-const carrito = new result.carrito();
+const cart = new result.carrito();
 
 cartRouter.post('/', async (req, res) => {
   const { name, description, cod, img, price, stock, id } = req.body;

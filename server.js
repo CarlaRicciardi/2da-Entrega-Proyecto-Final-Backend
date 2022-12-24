@@ -16,8 +16,12 @@ app.use(express.json());
 // const cors = require('cors');
 // app.use(cors({ origin: '*' }));
 
+app.get('/', (req, res) => {
+  res.send('Bienvenidos! Ingresar la ruta correcta');
+});
+
 app.get('/*', (req, res) => {
-  res.json({ error: true, descripcion: 'ruta no encontrada' });
+  res.json({error: true, description: 'ruta no encontrada'});
 });
 
 app.listen(PORT, () => {
