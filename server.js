@@ -2,10 +2,10 @@ import express from 'express';
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-import productsRouter from './server/routes/productsRouter';
+import productsRouter from './server/routes/productsRouter.js';
 app.use('/api/productos', productsRouter);
 
-import cartRouter from './server/routes/cartRouter';
+import cartRouter from './server/routes/cartRouter.js';
 app.use('/api/carrito', cartRouter);
 
 //middlewares

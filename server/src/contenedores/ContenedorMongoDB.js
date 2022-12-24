@@ -1,6 +1,6 @@
-import {connect} from "mongoose";
-import {Cart} from '../models/modelCarritos.ja'
-import {Product} from '../models/modelProductos.js'
+import { connect } from 'mongoose';
+import { modelCart } from '../models/modelCarritos.js';
+import { modelProduct } from '../models/modelProductos.js';
 
 async function connectMG() {
   try {
@@ -20,7 +20,7 @@ console.log('conectado!!!');
 
 class ContenedorMongoDB {
   constructor(schema) {
-    this.schema = mongoose.model(schema)
+    this.schema = mongoose.model(schema);
   }
 }
 

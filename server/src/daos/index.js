@@ -1,11 +1,11 @@
-import ProductosDaoArchivo from './productos/ProductosDaoArchivo.js';
-import ProductosDaoFirebase from './productos/ProductosDaoFirebase.js';
-import ProductosDaoMemoria from './productos/ProductosDaoMemoria.js';
-import ProductosDaoMongoDB from './productos/ProductosDaoMongoDB.js';
-import CarritosDaoArchivo from './carritos/CarritosDaoArchivo.js';
-import CarritosDaoFirebase from './carritos/CarritosDaoFirebase.js';
-import CarritosDaoMemoria from './carritos/CarritosDaoMemoria.js';
-import CarritosDaoMongoDB from './carritos/CarritosDaoMongoDB.js';
+import ProductosDaoArchivo from './products/ProductosDaoArchivo.js';
+import ProductosDaoFirebase from './products/ProductosDaoFirebase.js';
+import ProductosDaoMemoria from './products/ProductosDaoMemoria.js';
+import ProductosDaoMongoDB from './products/ProductosDaoMongoDB.js';
+import CarritosDaoArchivo from './carts/CarritosDaoArchivo.js';
+import CarritosDaoFirebase from './carts/CarritosDaoFirebase.js';
+import CarritosDaoMemoria from './carts/CarritosDaoMemoria.js';
+import CarritosDaoMongoDB from './carts/CarritosDaoMongoDB.js';
 
 import { config } from 'dotenv';
 config();

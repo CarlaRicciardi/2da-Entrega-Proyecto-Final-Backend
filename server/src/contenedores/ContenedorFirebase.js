@@ -1,12 +1,12 @@
-const admin = require('firebase-admin');
+import admin from 'firebase-admin';
 
-const serviceAccount = require('../../priviFirebase.json');
+import serviceAccount from '../../../privi.json' assert { type: 'json' };
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 
-const { getFirestore } = require('firebase-admin/firestore');
+import { getFirestore } from 'firebase-admin/firestore';
 const db = getFirestore();
 
 class ContenedorFirebase {
