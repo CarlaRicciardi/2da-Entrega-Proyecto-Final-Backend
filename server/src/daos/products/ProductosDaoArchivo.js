@@ -2,7 +2,7 @@ import ContenedorArchivo from '../../contenedores/ContenedorArchivo.js';
 
 class ProductosDaoArchivo extends ContenedorArchivo {
   constructor() {
-    super('../db/productos.json');
+    super('./server/src/db/productos.json');
   }
 }
 

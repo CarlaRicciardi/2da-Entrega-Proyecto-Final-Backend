@@ -7,9 +7,13 @@ class ContenedorArchivo {
 
   async getAll() {
     try {
-      await fs.promises.readFile(this.ruta, 'utf-8');
-      const allObjects = await JSON.parse(objs);
-      return allObjects;
+      const objs = await fs.promises.readFile(this.ruta, 'utf-8');
+      if (objs) {
+        const allObjects = await JSON.parse(objs);
+        return allObjects;
+      } else {
+        return [];
+      }
     } catch (error) {
       return error;
     }
@@ -74,13 +78,14 @@ class ContenedorArchivo {
   async deleteObject(id) {
     try {
       const objects = await this.getAll();
-      const object = await this.getById(object.id);
+      const object = await this.getById(id);
 
       if (!objects || !objects.length || !object) {
         return { error: 'object not find!' };
       } else {
-        const newObjects = objects.filter((obj) => obj.id != id);
-        await fs.promises.writeFile(this.ruta, newObjects, {
+        const newObjects = objects.filter((obj) => obj.id != object.id);
+        console.log(newObjects);
+        await fs.promises.writeFile(this.ruta, JSON.stringify(newObjects), {
           encoding: 'utf-8',
         });
         return 'object deleted succesfully';

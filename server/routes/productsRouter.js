@@ -21,8 +21,7 @@ const middlewareAdmin = (req, res, next) => {
 productsRouter.get('/', async (req, res) => {
   const productsList = await products.getAll();
   res.json(productsList);
-})
-
+});
 
 // GET '/api/productos' -> muestra todos los productos o o devuelve un producto segun id.
 productsRouter.get('/:id?', async (req, res) => {
@@ -38,23 +37,25 @@ productsRouter.get('/:id?', async (req, res) => {
 
 // POST '/api/productos' -> incorpora productos al listado (solo admins)
 productsRouter.post('/', middlewareAdmin, async (req, res) => {
-  const { name, description, cod, img, price, stock } = req.body;
-  console.log(name, description, cod, img, price, stock);
+  const { body } = req;
+  console.log(body);
+  // const { name, description, cod, img, price, stock } = req.body;
+  // console.log(name, description, cod, img, price, stock);
 
-  try {
-    let addProduct = await products.save({
-      name,
-      timestamp: Date.now(),
-      description,
-      cod,
-      img,
-      price,
-      stock,
-    });
-    res.json({ success: true, addProduct });
-  } catch {
-    res.json({ error: true, msg: 'No se pudo guardar el producto' });
-  }
+  // try {
+  //   let addProduct = await products.save({
+  //     name,
+  //     timestamp: Date.now(),
+  //     description,
+  //     cod,
+  //     img,
+  //     price,
+  //     stock,
+  //   });
+  //   res.json({ success: true, addProduct });
+  // } catch {
+  //   res.json({ error: true, msg: 'No se pudo guardar el producto' });
+  // }
 });
 
 // PUT '/api/productos/:id' -> recibe y actualiza un producto según su id. (solo admins)
@@ -80,9 +81,9 @@ productsRouter.put('/:id', middlewareAdmin, async (req, res) => {
 
 // DELETE '/api/productos/:id' -> elimina un producto según su id. (solo admins)
 productsRouter.delete('/:id', middlewareAdmin, async (req, res) => {
-  const { id } = req.params;
+  let { id } = req.params;
   try {
-    await products.deleteById(id);
+    await products.deleteObject(id);
     res.json({ success: true });
   } catch (e) {
     res.json({ error: true, msg: 'producto no encontrado' });
