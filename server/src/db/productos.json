@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "name": "televisor",
+    "description": "negro",
+    "cod": 1983439,
+    "img": "bla",
+    "price": 16000,
+    "stock": 2
+  },
+  {
+    "name": "compu",
+    "description": "negro",
+    "cod": 1983439,
+    "img": "bla",
+    "price": 16000,
+    "stock": 2
+  }
+]

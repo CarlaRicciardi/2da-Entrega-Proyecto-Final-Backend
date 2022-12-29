@@ -1,4 +1,4 @@
-import { promises as fs } from 'fs';
+import fs from 'fs';
 
 class ContenedorArchivo {
   constructor(ruta) {
@@ -11,7 +11,7 @@ class ContenedorArchivo {
       const allObjects = await JSON.parse(objs);
       return allObjects;
     } catch (error) {
-      return [];
+      return error;
     }
   }
 

@@ -2,8 +2,9 @@ import express from 'express';
 const { Router } = express;
 const cartRouter = Router();
 
-import result from '../src/daos/index.js';
-const cart = new result.carrito();
+import instancia from '../src/daos/index.js';
+const cart = new instancia.carrito();
+
 
 cartRouter.post('/', async (req, res) => {
   const { name, description, cod, img, price, stock, id } = req.body;

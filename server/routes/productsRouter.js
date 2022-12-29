@@ -2,8 +2,8 @@ import express from 'express';
 const { Router } = express;
 const productsRouter = Router();
 
-import result from '../src/daos/index.js';
-const products = new result.producto();
+import instancia from '../src/daos/index.js';
+const products = new instancia.producto();
 
 //middleware
 let isAdmin = true;
@@ -18,6 +18,12 @@ const middlewareAdmin = (req, res, next) => {
   }
 };
 
+productsRouter.get('/', async (req, res) => {
+  const productsList = await products.getAll();
+  res.json(productsList);
+})
+
+
 // GET '/api/productos' -> muestra todos los productos o o devuelve un producto segun id.
 productsRouter.get('/:id?', async (req, res) => {
   const { id } = req.params;
@@ -30,11 +36,11 @@ productsRouter.get('/:id?', async (req, res) => {
   }
 });
 
-// productsRouter.use(middlewareAdmin);
-
 // POST '/api/productos' -> incorpora productos al listado (solo admins)
 productsRouter.post('/', middlewareAdmin, async (req, res) => {
   const { name, description, cod, img, price, stock } = req.body;
+  console.log(name, description, cod, img, price, stock);
+
   try {
     let addProduct = await products.save({
       name,
