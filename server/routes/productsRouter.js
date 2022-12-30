@@ -61,22 +61,23 @@ productsRouter.post('/', middlewareAdmin, async (req, res) => {
 // PUT '/api/productos/:id' -> recibe y actualiza un producto según su id. (solo admins)
 productsRouter.put('/:id', middlewareAdmin, async (req, res) => {
   const { id } = req.params;
-  const { name, description, cod, img, price, stock } = req.body;
-  try {
-    let updateProduct = await products.update(
-      id,
-      name,
-      description,
-      cod,
-      img,
-      price,
-      stock
-    );
-    res.json({ updated: updateProduct });
-  } catch (e) {
-    console.log(e);
-    res.json({ error: true });
-  }
+  console.log(id)
+  // const { name, description, cod, img, price, stock } = req.body;
+  // try {
+  //   let updateProduct = await products.update(
+  //     id,
+  //     name,
+  //     description,
+  //     cod,
+  //     img,
+  //     price,
+  //     stock
+  //   );
+  //   res.json({ updated: updateProduct });
+  // } catch (e) {
+  //   console.log(e);
+  //   res.json({ error: true });
+  // }
 });
 
 // DELETE '/api/productos/:id' -> elimina un producto según su id. (solo admins)

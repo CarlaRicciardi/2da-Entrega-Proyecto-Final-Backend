@@ -1,7 +1,6 @@
 import { Schema, model } from 'mongoose';
 const CarritoSchema = new Schema({
-  products: { type: [] },
-  timestamp: { type: String },
+  products: { type: Object },
 });
 
-export const modelCart = model('cart', CarritoSchema);
+export const modelCart = model('carts', CarritoSchema);

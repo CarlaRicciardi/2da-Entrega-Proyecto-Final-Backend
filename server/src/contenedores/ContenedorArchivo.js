@@ -25,7 +25,7 @@ class ContenedorArchivo {
     if (findObject) {
       return findObject;
     } else {
-      return { error: 'object not find' };
+      return 'object not found';
     }
   }
 
@@ -98,6 +98,64 @@ class ContenedorArchivo {
   async deleteAll() {
     await fs.writeFileSync(this.file, '[]');
     return 'Se han eliminado todos los productos';
+  }
+
+  async newCart() {
+    try {
+      const allCarts = JSON.parse(fs.readFileSync(this.ruta));
+      let idCart;
+      if (allCarts.length > 0) {
+        let highestid = Math.max(...allCarts.map((el) => el.id));
+        idCart = highestid + 1;
+      } else {
+        idCart = 1;
+      }
+
+      let newCart = {
+        id: idCart,
+        productos: [],
+      };
+      allCarts.push(newCart);
+      await fs.promises.writeFile(this.ruta, JSON.stringify(allCarts));
+      return idCart;
+    } catch (error) {
+      console.log('Se ha producido un error', error);
+      return 'Se ha producido un error';
+    }
+  }
+
+  async getProductsFromCart(idCart) {
+    try {
+      const allCarts = JSON.parse(fs.readFileSync(this.ruta));
+      const index = allCarts.findIndex((object) => object.id == idCart);
+      if (allCarts[index]) {
+        return allCarts[index].productos;
+      } else {
+        return 'No existe el número de id elegido';
+      }
+    } catch {
+      console.log('Se ha producido un error');
+      return 'Se ha producido un error';
+    }
+  }
+
+  async addProductToCart(idCart, product) {
+    const allCarts = JSON.parse(fs.readFileSync(this.ruta));
+    console.log(allCarts);
+    const index = allCarts.findIndex((object) => object.id == idCart);
+    console.log(index);
+    allCarts[index].productos.push(product);
+    await fs.promises.writeFile(this.ruta, JSON.stringify(allCarts));
+  }
+
+  async deleteProductFromCart(num, id_prod) {
+    const allCarts = JSON.parse(fs.readFileSync(this.ruta));
+    const index = allCarts.findIndex((object) => object.id == num);
+    const indexProduct = allCarts[index].products.findIndex(
+      (object) => object.id == id_prod
+    );
+    allCarts[index].products.splice(indexProduct, 1);
+    await fs.promises.writeFile(this.ruta, JSON.stringify(allCarts));
   }
 }
 

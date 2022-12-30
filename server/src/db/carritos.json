@@ -1,1 +1,25 @@
-[]
+[
+  {
+    "id": 1,
+    "productos": [
+      {
+        "id": 1,
+        "name": "xxx",
+        "description": "xxx",
+        "cod": 3245,
+        "img": "xx",
+        "price": 2000,
+        "stock": 10
+      },
+      {
+        "id": 2,
+        "name": "yyy",
+        "description": "yyy",
+        "cod": 3223,
+        "img": "yyy",
+        "price": 1000,
+        "stock": 15
+      }
+    ]
+  }
+]
