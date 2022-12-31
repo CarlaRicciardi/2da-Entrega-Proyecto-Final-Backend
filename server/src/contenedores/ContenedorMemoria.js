@@ -11,7 +11,7 @@ class ContenedorMemoria {
         stock: 100,
       },
       {
-        id: 1,
+        id: 2,
         name: 'pera',
         despcription: 'verde',
         cod: 124,
@@ -26,7 +26,7 @@ class ContenedorMemoria {
         productos: [
           {
             id: 1,
-            name: 'xxx',
+            name: 'holaaa',
             description: 'xxx',
             cod: 3245,
             img: 'xx',
@@ -50,7 +50,7 @@ class ContenedorMemoria {
   getAll(list) {
     if (list == 'products') {
       return this.productsList;
-    } else if ((list = 'carts')) {
+    } else if (list == 'carts') {
       return this.cartsList;
     } else {
       ('no existe la lista');
@@ -129,7 +129,7 @@ class ContenedorMemoria {
   deleteObject(id, list) {
     try {
       let lista;
-      if (lista == 'products') {
+      if (list == 'products') {
         lista = this.productsList;
       } else if (list == 'carts') {
         lista = this.cartsList;
@@ -182,7 +182,7 @@ class ContenedorMemoria {
       const lista = this.cartsList;
       const index = lista.findIndex((object) => object.id == idCart);
       if (lista[index]) {
-        return lista[index].products;
+        return lista[index].productos;
       } else {
         return 'No existe el número de id elegido';
       }
@@ -195,16 +195,16 @@ class ContenedorMemoria {
   async addProductToCart(idCart, product) {
     const lista = this.cartsList;
     const index = lista.findIndex((object) => object.id == idCart);
-    lista[index].products.push(product);
+    lista[index].productos.push(product);
   }
 
   async deleteProductFromCart(num, id_prod) {
     const lista = this.cartsList;
     const index = lista.findIndex((object) => object.id == num);
-    const indexProduct = lista[index].products.findIndex(
+    const indexProduct = lista[index].productos.findIndex(
       (object) => object.id == id_prod
     );
-    lista[index].products.splice(indexProduct, 1);
+    lista[index].productos.splice(indexProduct, 1);
   }
 }
 

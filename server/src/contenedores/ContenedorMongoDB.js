@@ -3,12 +3,14 @@ import { connect } from 'mongoose';
 import { modelCart } from '../models/modelCarritos.js';
 import { modelProduct } from '../models/modelProductos.js';
 
+//la conexion a mongo esta en index para que lo lea primero el server
 async function connectMG() {
   try {
     await connect(
       'mongodb+srv://carlaRicciardi:mongoatlas123@cluster0.tdnzcdj.mongodb.net/?retryWrites=true&w=majority',
       { useNewUrlParser: true }
     );
+    console.log('me conecte a mongoDB')
   } catch (e) {
     console.log(e);
     throw 'can not connect to the db';
@@ -27,20 +29,20 @@ function validacionId(array, id) {
 }
 
 class ContenedorMongoDB {
-  constructor(name, schema) {
-    this.schema = mongoose.model(name, schema);
+  constructor({ name, schema }) {
+    this.model = mongoose.model(name, schema);
   }
 
   async getAll() {
-    const result = await this.schema.find({});
+    const result = await this.model.find({});
     return result;
   }
 
   async getById(id) {
-    const lista = await this.schema.find({});
+    const lista = await this.model.find({});
     const validacion = validacionId(lista, num);
     if (validacion) {
-      let result = await this.schema.find({ _id: id });
+      let result = await this.model.find({ _id: id });
       result = result[0];
       return result;
     } else {
@@ -95,10 +97,10 @@ class ContenedorMongoDB {
   }
 
   async deleteObject(id) {
-    const lista = await this.schema.find({});
+    const lista = await this.model.find({});
     const validacion = validacionId(lista, id);
     if (validacion) {
-      await this.schema.deleteOne({ _id: id });
+      await this.model.deleteOne({ _id: id });
       return `Se elimino con exito`;
     } else {
       return 'no existe el numero de id elegido';
@@ -121,16 +123,16 @@ class ContenedorMongoDB {
   }
 
   async getProductsFromCart(idCart) {
-    const lista = await this.schema.find({});
-    const index = lista.findIndex((object) => object.id == id);
+    const lista = await this.model.find({});
+    const index = lista.findIndex((object) => object.id == idCart);
     return lista[index].productos;
   }
 
   async addProductToCart(id, product) {
-    const lista = await this.schema.find({});
+    const lista = await this.model.find({});
     const index = lista.findIndex((object) => object.id == num);
     lista[index].productos.push(product);
-    await this.schema.updateOne(
+    await this.model.updateOne(
       { _id: id },
       {
         $set: {
@@ -141,13 +143,13 @@ class ContenedorMongoDB {
   }
 
   async deleteProductFromCart(id, id_prod) {
-    const lista = await this.schema.find({});
+    const lista = await this.model.find({});
     const index = lista.findIndex((object) => object.id == num);
     const indexProduct = lista[index].productos.findIndex(
       (object) => object.id == id_prod
     );
     lista[index].productos.splice(indexProduct, 1);
-    await this.schema.updateOne(
+    await this.model.updateOne(
       { _id: id },
       {
         $set: {

@@ -1,4 +1,5 @@
 import express from 'express';
+import { connect } from 'mongoose';
 const app = express();
 const PORT = process.env.PORT || 8080;
 

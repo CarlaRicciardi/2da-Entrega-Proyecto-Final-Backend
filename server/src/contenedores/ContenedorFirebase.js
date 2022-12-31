@@ -28,6 +28,7 @@ class ContenedorFirebase {
 
   async getAll() {
     const result = await this.collection.get();
+    console.log(result)
     let arrayRes = result.docs.map((item) => {
       return { id: item.id, ...item.data() };
     });

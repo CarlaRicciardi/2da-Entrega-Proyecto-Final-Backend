@@ -19,7 +19,7 @@ const middlewareAdmin = (req, res, next) => {
 };
 
 productsRouter.get('/', async (req, res) => {
-  const productsList = await products.getAll();
+  const productsList = await products.getAll('products');
   res.json(productsList);
 });
 
@@ -27,10 +27,10 @@ productsRouter.get('/', async (req, res) => {
 productsRouter.get('/:id?', async (req, res) => {
   const { id } = req.params;
   if (id) {
-    const productsList = await products.getById(id);
+    const productsList = await products.getById(id, 'products');
     res.json({ products: productsList });
   } else {
-    const productsList = await products.getAll();
+    const productsList = await products.getAll('products');
     res.json({ productsList });
   }
 });
@@ -84,8 +84,8 @@ productsRouter.put('/:id', middlewareAdmin, async (req, res) => {
 productsRouter.delete('/:id', middlewareAdmin, async (req, res) => {
   let { id } = req.params;
   try {
-    await products.deleteObject(id);
-    res.json({ success: true });
+    const result = await products.deleteObject(id, 'products');
+    res.json(result);
   } catch (e) {
     res.json({ error: true, msg: 'producto no encontrado' });
   }

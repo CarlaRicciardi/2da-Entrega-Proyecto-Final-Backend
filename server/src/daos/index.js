@@ -7,6 +7,7 @@ import CarritosDaoFirebase from './carts/CarritosDaoFirebase.js';
 import CarritosDaoMemoria from './carts/CarritosDaoMemoria.js';
 import CarritosDaoMongoDB from './carts/CarritosDaoMongoDB.js';
 
+
 import { config } from 'dotenv';
 config();
 
@@ -62,5 +63,20 @@ const result = {
   [instancia[0].description]: instancia[0].nombreInstancia,
   [instancia[1].description]: instancia[1].nombreInstancia,
 };
+
+// async function connectMG() {
+//   try {
+//     await connect(
+//       'mongodb+srv://carlaRicciardi:mongoatlas123@cluster0.tdnzcdj.mongodb.net/?retryWrites=true&w=majority',
+//       { useNewUrlParser: true }
+//     );
+//   } catch (e) {
+//     console.log(e);
+//     throw 'can not connect to the db';
+//   }
+// }
+// if (instancia[0].id == 'mongoDB') {
+//   await connectMG();
+// }
 
 export default result;

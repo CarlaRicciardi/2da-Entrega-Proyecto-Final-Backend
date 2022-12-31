@@ -3,7 +3,10 @@ import {modelProduct} from '../../models/modelProductos.js';
 
 class ProductosDaoMongoDB extends ContenedorMongoDB {
   constructor() {
-    super(modelProduct);
+    super({
+      name: 'products',
+      schema: modelProduct.ProductoSchema
+    });
   }
 }
 
