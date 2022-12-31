@@ -50,7 +50,7 @@ class ContenedorMongoDB {
     }
   }
 
-  async saveObject(name, description, cod, img, price, stock) {
+  async save(name, description, cod, img, price, stock) {
     try {
       const newProduct = new modelProduct({
         name: name,
@@ -70,7 +70,7 @@ class ContenedorMongoDB {
     }
   }
 
-  async updateObject(id, name, description, cod, img, price, stock) {
+  async update(id, name, description, cod, img, price, stock) {
     const lista = await modelProduct.find({});
     const validacion = validacionId(lista, id);
     if (validacion) {
@@ -96,7 +96,7 @@ class ContenedorMongoDB {
     }
   }
 
-  async deleteObject(id) {
+  async deleteById(id) {
     const lista = await this.model.find({});
     const validacion = validacionId(lista, id);
     if (validacion) {

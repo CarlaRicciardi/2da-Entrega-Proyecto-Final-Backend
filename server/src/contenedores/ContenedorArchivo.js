@@ -29,78 +29,77 @@ class ContenedorArchivo {
     }
   }
 
-  async saveObject(newObject) {
+  async save(timestamp, name, description, cod, img, price, stock) {
     try {
-      const objects = await this.getAll();
-      let id;
-
-      if (!objects || !objects.length) {
-        id = 1;
-      } else {
-        objects.forEach((obj) => {
-          id = obj.id;
-        });
-        id = id + 1;
-      }
-
-      const save =
-        objects && objects.length
-          ? [...objects, { ...newObject, id }]
-          : [{ ...newObject, id }];
-      await fs.promises.writeFile(this.ruta, JSON.stringify(save), {
-        encoding: 'utf-8',
-      });
-      return 'Saved succesfully!';
+      const lista = JSON.parse(fs.readFileSync(this.ruta));
+      let highestId = Math.max(...lista.map((el) => el.id));
+      let id = highestid + 1;
+      let newProduct = {
+        id: id,
+        timestamp: timestamp,
+        name: name,
+        description: description,
+        cod: cod,
+        img: img,
+        price: price,
+        stock: stock,
+      };
+      lista.push(newProduct);
+      console.log(lista);
+      await fs.promises.writeFile(this.ruta, JSON.stringify(lista));
+      return id;
     } catch (error) {
-      return { error };
+      console.log('Se ha producido un error');
+      return 'Se ha producido un error';
+    }
+  }
+  //falta ver esta funcion y agregar timestamp
+  async update(num, timestamp, name, description, cod, img, price, stock) {
+    try {
+      const lista = await JSON.parse(fs.readFileSync(this.ruta));
+      const index = lista.findIndex((object) => object.id == num);
+      if (lista[index]) {
+        const objectUpdated = {
+          id: num,
+          timestamp: timestamp,
+          name: name,
+          description: description,
+          cod: cod,
+          img: img,
+          price: price,
+          stock: stock,
+        };
+        lista[index] = objectUpdated;
+        await fs.promises.writeFile(this.ruta, JSON.stringify(lista));
+        return `Se actualizó el producto ${objectUpdated.name}`;
+      } else {
+        return 'no existe el numero de id elegido';
+      }
+    } catch {
+      console.log('se ha producido un error');
+      return 'se ha producido un error';
     }
   }
 
-  async updateObject(object) {
+  async deleteById(num) {
     try {
-      const objects = await this.getAll();
-      const object = await this.getById(object.id);
+      const lista = JSON.parse(fs.readFileSync(this.ruta));
+      const index = lista.findIndex((object) => object.id == num);
 
-      if (object) {
-        const objectUpdated = [...objects, object];
-        await fs.promises.writeFile(this.ruta, JSON.stringify(objectUpdated), {
-          encoding: 'utf-8',
-        });
-        return 'Object Updated succesfully';
+      if (lista[index]) {
+        lista.splice(index, 1);
+        await fs.promises.writeFile(this.ruta, JSON.stringify(lista));
+        return `Se eliminó con exito`;
       } else {
-        throw new Error('object not find');
+        return 'No existe el numero de id elegido';
       }
-    } catch (error) {
-      return { error };
+    } catch {
+      console.log('Se ha producido un error');
+      return 'Se ha producido un error';
     }
   }
 
-  async deleteObject(id) {
-    try {
-      const objects = await this.getAll();
-      const object = await this.getById(id);
-
-      if (!objects || !objects.length || !object) {
-        return { error: 'object not find!' };
-      } else {
-        const newObjects = objects.filter((obj) => obj.id != object.id);
-        console.log(newObjects);
-        await fs.promises.writeFile(this.ruta, JSON.stringify(newObjects), {
-          encoding: 'utf-8',
-        });
-        return 'object deleted succesfully';
-      }
-    } catch (error) {
-      return { error };
-    }
-  }
-
-  async deleteAll() {
-    await fs.writeFileSync(this.file, '[]');
-    return 'Se han eliminado todos los productos';
-  }
-
-  async newCart() {
+  async newCart(timestampCart) {
     try {
       const allCarts = JSON.parse(fs.readFileSync(this.ruta));
       let idCart;
@@ -113,6 +112,7 @@ class ContenedorArchivo {
 
       let newCart = {
         id: idCart,
+        timestampCart: timestampCart,
         productos: [],
       };
       allCarts.push(newCart);

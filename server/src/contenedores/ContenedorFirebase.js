@@ -28,7 +28,6 @@ class ContenedorFirebase {
 
   async getAll() {
     const result = await this.collection.get();
-    console.log(result)
     let arrayRes = result.docs.map((item) => {
       return { id: item.id, ...item.data() };
     });
@@ -46,7 +45,7 @@ class ContenedorFirebase {
     }
   }
 
-  async saveObject(name, description, cod, img, price, stock) {
+  async save(name, description, cod, img, price, stock) {
     try {
       let result;
       result = await this.collection.add({
@@ -64,7 +63,7 @@ class ContenedorFirebase {
     }
   }
 
-  async updateObject(num, name, description, cod, img, price, stock) {
+  async update(num, name, description, cod, img, price, stock) {
     const lista = await this.collection.get();
     const validacion = validacionId(lista, id);
     if (validacion) {
@@ -82,11 +81,11 @@ class ContenedorFirebase {
     }
   }
 
-  async deleteObject(num) {
+  async deleteById(id) {
     const lista = await this.collection.get();
     const validacion = validacionId(lista, id);
     if (validacion) {
-      await this.collection.doc(num).delete();
+      await this.collection.doc(id).delete();
       return `Se elimino con exito`;
     } else {
       return 'no existe el numero de id elegido';

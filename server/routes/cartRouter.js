@@ -1,6 +1,7 @@
 import express from 'express';
 const { Router } = express;
 const cartRouter = Router();
+import moment from 'moment';
 
 import instancia from '../src/daos/index.js';
 const cart = new instancia.carrito();
@@ -12,8 +13,13 @@ cartRouter.get('/', async (req, res) => {
 });
 
 cartRouter.post('/', async (req, res) => {
-  let idCart = await cart.newCart();
-  res.json(`Se creo un carrito nuevo con id ${idCart}`);
+  try {
+    const timestampCart = moment().format('DD / MM / YYYY, h:mm:ss');
+    let idCart = await cart.newCart(timestampCart);
+    res.json(`Se creo un carrito nuevo con id ${idCart}`);
+  } catch {
+    res.json('error!');
+  }
 });
 
 cartRouter.get('/:id/productos', async (req, res) => {
@@ -42,7 +48,7 @@ cartRouter.post('/:id/productos/:id_prod', async (req, res) => {
 
 cartRouter.delete('/:id', async (req, res) => {
   let { id } = req.params;
-  const result = await cart.deleteObject(id, 'carts');
+  const result = await cart.delete(id, 'carts');
   res.json({ carritoEliminado: id });
 });
 

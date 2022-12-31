@@ -79,7 +79,7 @@ class ContenedorMemoria {
     }
   }
 
-  saveObject(name, description, cod, img, price, stock) {
+  save(name, description, cod, img, price, stock) {
     try {
       const lista = this.productsList;
       let highestid = Math.max(...lista.map((el) => el.id));
@@ -101,7 +101,7 @@ class ContenedorMemoria {
     }
   }
 
-  updateObject(id, name, description, cod, img, price, stock) {
+  update(id, name, description, cod, img, price, stock) {
     try {
       const lista = this.productsList;
       const index = lista.findIndex((object) => object.id == id);
@@ -126,7 +126,7 @@ class ContenedorMemoria {
     }
   }
 
-  deleteObject(id, list) {
+  deleteById(id, list) {
     try {
       let lista;
       if (list == 'products') {

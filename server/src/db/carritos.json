@@ -3,22 +3,37 @@
     "id": 1,
     "productos": [
       {
+        "name": "manzana",
         "id": 1,
-        "name": "xxx",
-        "description": "xxx",
-        "cod": 3245,
-        "img": "xx",
-        "price": 2000,
-        "stock": 10
+        "description": "roja",
+        "cod": 123,
+        "img": "bla",
+        "price": 50,
+        "stock": 200
       },
       {
+        "name": "banana",
         "id": 2,
-        "name": "yyy",
-        "description": "yyy",
-        "cod": 3223,
-        "img": "yyy",
-        "price": 1000,
-        "stock": 15
+        "description": "amarilla",
+        "cod": 124,
+        "img": "bla",
+        "price": 30,
+        "stock": 500
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "timestampCart": "31 / 12 / 2022, 10:31:34",
+    "productos": [
+      {
+        "name": "banana",
+        "id": 2,
+        "description": "amarilla",
+        "cod": 124,
+        "img": "bla",
+        "price": 30,
+        "stock": 500
       }
     ]
   }

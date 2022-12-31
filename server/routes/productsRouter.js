@@ -1,6 +1,7 @@
 import express from 'express';
 const { Router } = express;
 const productsRouter = Router();
+import moment from 'moment';
 
 import instancia from '../src/daos/index.js';
 const products = new instancia.producto();
@@ -39,52 +40,52 @@ productsRouter.get('/:id?', async (req, res) => {
 productsRouter.post('/', middlewareAdmin, async (req, res) => {
   const { body } = req;
   console.log(body);
-  // const { name, description, cod, img, price, stock } = req.body;
-  // console.log(name, description, cod, img, price, stock);
-
-  // try {
-  //   let addProduct = await products.save({
-  //     name,
-  //     timestamp: Date.now(),
-  //     description,
-  //     cod,
-  //     img,
-  //     price,
-  //     stock,
-  //   });
-  //   res.json({ success: true, addProduct });
-  // } catch {
-  //   res.json({ error: true, msg: 'No se pudo guardar el producto' });
-  // }
+  const timestamp = moment().format('DD / MM / YYYY, h:mm:ss');
+  try {
+    let addProduct = await products.save({
+      name,
+      timestamp,
+      description,
+      cod,
+      img,
+      price,
+      stock,
+    });
+    res.json({ success: true, addProduct });
+  } catch {
+    res.json({ error: true, msg: 'No se pudo guardar el producto' });
+  }
 });
 
 // PUT '/api/productos/:id' -> recibe y actualiza un producto según su id. (solo admins)
 productsRouter.put('/:id', middlewareAdmin, async (req, res) => {
   const { id } = req.params;
-  console.log(id)
-  // const { name, description, cod, img, price, stock } = req.body;
-  // try {
-  //   let updateProduct = await products.update(
-  //     id,
-  //     name,
-  //     description,
-  //     cod,
-  //     img,
-  //     price,
-  //     stock
-  //   );
-  //   res.json({ updated: updateProduct });
-  // } catch (e) {
-  //   console.log(e);
-  //   res.json({ error: true });
-  // }
+  console.log(id);
+  const { body } = req;
+  const timestamp = moment().format("DD / MM / YYYY, h:mm:ss");
+  try {
+    let updateProduct = await products.update(
+      id,
+      timestamp,
+      body.name,
+      body.description,
+      body.cod,
+      body.img,
+      body.price,
+      body.stock
+    );
+    res.json({ updated: updateProduct });
+  } catch (e) {
+    console.log(e);
+    res.json({ error: true });
+  }
 });
 
 // DELETE '/api/productos/:id' -> elimina un producto según su id. (solo admins)
 productsRouter.delete('/:id', middlewareAdmin, async (req, res) => {
   let { id } = req.params;
   try {
-    const result = await products.deleteObject(id, 'products');
+    const result = await products.deleteById(id, 'products');
     res.json(result);
   } catch (e) {
     res.json({ error: true, msg: 'producto no encontrado' });
