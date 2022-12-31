@@ -42,15 +42,15 @@ productsRouter.post('/', middlewareAdmin, async (req, res) => {
   console.log(body);
   const timestamp = moment().format('DD / MM / YYYY, h:mm:ss');
   try {
-    let addProduct = await products.save({
-      name,
+    let addProduct = await products.save(
       timestamp,
-      description,
-      cod,
-      img,
-      price,
-      stock,
-    });
+      body.name,
+      body.description,
+      body.cod,
+      body.img,
+      body.price,
+      body.stock,
+    );
     res.json({ success: true, addProduct });
   } catch {
     res.json({ error: true, msg: 'No se pudo guardar el producto' });
@@ -62,7 +62,8 @@ productsRouter.put('/:id', middlewareAdmin, async (req, res) => {
   const { id } = req.params;
   console.log(id);
   const { body } = req;
-  const timestamp = moment().format("DD / MM / YYYY, h:mm:ss");
+  console.log(body);
+  const timestamp = moment().format('DD / MM / YYYY, h:mm:ss');
   try {
     let updateProduct = await products.update(
       id,
