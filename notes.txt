@@ -1,3 +1,6 @@
-usuario y clave mongo atlas:
-carlaRicciardi
-pass: mongoatlas123
+Para probar las distintas bases de datos se debe modificar el archivo .env entre las opciones:
+
+INSTANCIA=archivo
+INSTANCIA=memoria
+INSTANCIA=mongoDB
+INSTANCIA=firebase

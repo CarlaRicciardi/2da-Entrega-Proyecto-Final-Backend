@@ -10,7 +10,6 @@ async function connectMG() {
       'mongodb+srv://carlaRicciardi:mongoatlas123@cluster0.tdnzcdj.mongodb.net/?retryWrites=true&w=majority',
       { useNewUrlParser: true }
     );
-    console.log('me conecte a mongoDB')
   } catch (e) {
     console.log(e);
     throw 'can not connect to the db';
@@ -50,9 +49,10 @@ class ContenedorMongoDB {
     }
   }
 
-  async save(name, description, cod, img, price, stock) {
+  async save(timestamp, name, description, cod, img, price, stock) {
     try {
       const newProduct = new modelProduct({
+        timestamp: timestamp,
         name: name,
         description: description,
         cod: cod,
@@ -70,7 +70,7 @@ class ContenedorMongoDB {
     }
   }
 
-  async update(id, name, description, cod, img, price, stock) {
+  async update(id, timestamp, name, description, cod, img, price, stock) {
     const lista = await modelProduct.find({});
     const validacion = validacionId(lista, id);
     if (validacion) {
@@ -80,6 +80,7 @@ class ContenedorMongoDB {
         },
         {
           $set: {
+            timestamp: timestamp,
             name: name,
             description: description,
             cod: cod,
@@ -110,6 +111,7 @@ class ContenedorMongoDB {
   async newCart(timestamp) {
     try {
       const newCart = new modelCart({
+        timestamp: timestamp,
         productos: [],
       });
       await newCart.save();

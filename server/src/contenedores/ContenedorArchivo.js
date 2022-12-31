@@ -7,25 +7,26 @@ class ContenedorArchivo {
 
   async getAll() {
     try {
-      const objs = await fs.promises.readFile(this.ruta, 'utf-8');
-      if (objs) {
-        const allObjects = await JSON.parse(objs);
-        return allObjects;
-      } else {
-        return [];
-      }
-    } catch (error) {
-      return error;
+      const lista = fs.readFileSync(this.ruta);
+      return JSON.parse(lista);
+    } catch {
+      console.log('getAll Error');
+      return 'getAll Error';
     }
   }
 
-  async getById(id) {
-    const objects = await this.getAll();
-    const findObject = objects.find((object) => object.id == id);
-    if (findObject) {
-      return findObject;
-    } else {
-      return 'object not found';
+  async getById(num) {
+    try {
+      const lista = await this.getAll();
+      const index = lista.findIndex((object) => object.id == num);
+      if (lista[index]) {
+        return lista[index];
+      } else {
+        return 'No existe el número de id elegido';
+      }
+    } catch {
+      console.log('(getById Error) Se ha producido un error');
+      return '(getById Error) Se ha producido un error';
     }
   }
 
@@ -33,7 +34,7 @@ class ContenedorArchivo {
     try {
       const lista = JSON.parse(fs.readFileSync(this.ruta));
       let highestId = Math.max(...lista.map((el) => el.id));
-      let id = highestid + 1;
+      let id = highestId + 1;
       let newProduct = {
         id: id,
         timestamp: timestamp,
@@ -53,7 +54,7 @@ class ContenedorArchivo {
       return 'Se ha producido un error';
     }
   }
-  //falta ver esta funcion y agregar timestamp
+
   async update(num, timestamp, name, description, cod, img, price, stock) {
     try {
       const lista = await JSON.parse(fs.readFileSync(this.ruta));
@@ -73,7 +74,7 @@ class ContenedorArchivo {
         await fs.promises.writeFile(this.ruta, JSON.stringify(lista));
         return `Se actualizó el producto ${objectUpdated.name}`;
       } else {
-        return 'no existe el numero de id elegido';
+        return 'No existe el número de id elegido';
       }
     } catch {
       console.log('se ha producido un error');
@@ -91,7 +92,7 @@ class ContenedorArchivo {
         await fs.promises.writeFile(this.ruta, JSON.stringify(lista));
         return `Se eliminó con exito`;
       } else {
-        return 'No existe el numero de id elegido';
+        return 'No existe el número de id elegido';
       }
     } catch {
       console.log('Se ha producido un error');
@@ -149,13 +150,13 @@ class ContenedorArchivo {
   }
 
   async deleteProductFromCart(num, id_prod) {
-    const allCarts = JSON.parse(fs.readFileSync(this.ruta));
-    const index = allCarts.findIndex((object) => object.id == num);
-    const indexProduct = allCarts[index].products.findIndex(
+    const lista = JSON.parse(fs.readFileSync(this.ruta));
+    const index = lista.findIndex((object) => object.id == num);
+    const indexProduct = lista[index].productos.findIndex(
       (object) => object.id == id_prod
     );
-    allCarts[index].products.splice(indexProduct, 1);
-    await fs.promises.writeFile(this.ruta, JSON.stringify(allCarts));
+    lista[index].productos.splice(indexProduct, 1)
+    await fs.promises.writeFile(this.ruta, JSON.stringify(lista))
   }
 }
 

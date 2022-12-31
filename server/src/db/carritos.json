@@ -3,15 +3,6 @@
     "id": 1,
     "productos": [
       {
-        "name": "manzana",
-        "id": 1,
-        "description": "roja",
-        "cod": 123,
-        "img": "bla",
-        "price": 50,
-        "stock": 200
-      },
-      {
         "name": "banana",
         "id": 2,
         "description": "amarilla",
@@ -19,6 +10,26 @@
         "img": "bla",
         "price": 30,
         "stock": 500
+      },
+      {
+        "id": 3,
+        "timestamp": "31 / 12 / 2022, 2:38:48",
+        "name": "anana",
+        "description": "amarillo",
+        "cod": 124,
+        "img": "bla",
+        "price": 200,
+        "stock": 20
+      },
+      {
+        "id": 3,
+        "timestamp": "31 / 12 / 2022, 2:38:48",
+        "name": "anana",
+        "description": "amarillo",
+        "cod": 124,
+        "img": "bla",
+        "price": 200,
+        "stock": 20
       }
     ]
   },
@@ -34,6 +45,26 @@
         "img": "bla",
         "price": 30,
         "stock": 500
+      },
+      {
+        "id": "1",
+        "timestamp": "31 / 12 / 2022, 2:41:06",
+        "name": "cereza",
+        "description": "roja",
+        "cod": 125,
+        "img": "bla",
+        "price": 300,
+        "stock": 50
+      },
+      {
+        "id": "1",
+        "timestamp": "31 / 12 / 2022, 2:41:06",
+        "name": "cereza",
+        "description": "roja",
+        "cod": 125,
+        "img": "bla",
+        "price": 300,
+        "stock": 50
       }
     ]
   }

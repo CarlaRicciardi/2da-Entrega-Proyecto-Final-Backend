@@ -49,7 +49,7 @@ productsRouter.post('/', middlewareAdmin, async (req, res) => {
       body.cod,
       body.img,
       body.price,
-      body.stock,
+      body.stock
     );
     res.json({ success: true, addProduct });
   } catch {

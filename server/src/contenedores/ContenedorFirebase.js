@@ -45,10 +45,11 @@ class ContenedorFirebase {
     }
   }
 
-  async save(name, description, cod, img, price, stock) {
+  async save(timestamp, name, description, cod, img, price, stock) {
     try {
       let result;
       result = await this.collection.add({
+        timestamp: timestamp,
         name: name,
         description: description,
         cod: cod,
@@ -63,11 +64,12 @@ class ContenedorFirebase {
     }
   }
 
-  async update(num, name, description, cod, img, price, stock) {
+  async update(num, timestamp, name, description, cod, img, price, stock) {
     const lista = await this.collection.get();
-    const validacion = validacionId(lista, id);
+    const validacion = validacionId(lista, num);
     if (validacion) {
       await this.collection.doc(num).update({
+        timestamp: timestamp,
         name: name,
         description: description,
         cod: cod,
@@ -91,42 +93,44 @@ class ContenedorFirebase {
       return 'no existe el numero de id elegido';
     }
   }
-  async newCart() {
+  async newCart(timestamp) {
     try {
       let res;
-      res = await this.coleccion.add({
+      res = await this.collection.add({
+        timestamp: timestamp,
         productos: [],
       });
       return res.id;
-    } catch {
-      console.log('Se ha producido un error');
+    } catch (e) {
+      console.log('Se ha producido un error', e);
       return 'Se ha producido un error';
     }
   }
 
   async getProductsFromCart(idCart) {
-    let result = await this.coleccion.doc(idCart).get();
+    let result = await this.collection.doc(idCart).get();
     result = result.data();
     return result.productos;
   }
 
   async addProductToCart(num, product, id_prod) {
-    let result = await this.coleccion.doc(num).get();
+    let result = await this.collection.doc(num).get();
     result = result.data();
     product['id'] = id_prod;
     result.productos.push(product);
-    await this.coleccion.doc(num).update({
+    await this.collection.doc(num).update({
       productos: result.productos,
     });
   }
+
   async deleteProductFromCart(num, id_prod) {
-    let result = await this.coleccion.doc(num).get();
+    let result = await this.collection.doc(num).get();
     result = result.data();
     const indexProduct = result.productos.findIndex(
       (object) => object.id == id_prod
     );
     result.productos.splice(indexProduct, 1);
-    await this.coleccion.doc(num).update({
+    await this.collection.doc(num).update({
       productos: result.productos,
     });
   }

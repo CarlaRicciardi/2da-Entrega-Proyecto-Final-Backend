@@ -3,6 +3,7 @@ class ContenedorMemoria {
     this.productsList = [
       {
         id: 1,
+        timestamp: '22 / 11 / 2022, 11:50:32',
         name: 'manzana',
         despcription: 'verde',
         cod: 123,
@@ -12,6 +13,7 @@ class ContenedorMemoria {
       },
       {
         id: 2,
+        timestamp: '22 / 11 / 2022, 11:26:41',
         name: 'pera',
         despcription: 'verde',
         cod: 124,
@@ -23,10 +25,12 @@ class ContenedorMemoria {
     this.cartsList = [
       {
         id: 1,
+        timestamp: '22 / 11 / 2022, 11:54:41',
         productos: [
           {
             id: 1,
-            name: 'holaaa',
+            timestamp: '22 / 11 / 2022, 11:59:41',
+            name: 'durazno',
             description: 'xxx',
             cod: 3245,
             img: 'xx',
@@ -35,7 +39,8 @@ class ContenedorMemoria {
           },
           {
             id: 2,
-            name: 'yyy',
+            timestamp: '22 / 11 / 2022, 11:26:41',
+            name: 'anana',
             description: 'yyy',
             cod: 3223,
             img: 'yyy',
@@ -79,13 +84,14 @@ class ContenedorMemoria {
     }
   }
 
-  save(name, description, cod, img, price, stock) {
+  save(timestamp, name, description, cod, img, price, stock) {
     try {
       const lista = this.productsList;
       let highestid = Math.max(...lista.map((el) => el.id));
       let id = highestid + 1;
       let newProduct = {
         id: id,
+        timestamp: timestamp,
         name: name,
         description: description,
         cod: cod,
@@ -101,13 +107,14 @@ class ContenedorMemoria {
     }
   }
 
-  update(id, name, description, cod, img, price, stock) {
+  update(id, timestamp, name, description, cod, img, price, stock) {
     try {
       const lista = this.productsList;
       const index = lista.findIndex((object) => object.id == id);
       if (lista[index]) {
         const newProduct = {
           id: id,
+          timestamp: timestamp,
           name: name,
           description: description,
           cod: cod,
@@ -154,7 +161,7 @@ class ContenedorMemoria {
     }
   }
 
-  async newCart() {
+  async newCart(timestampCart) {
     try {
       const lista = this.cartsList;
       let idCart;
@@ -167,6 +174,7 @@ class ContenedorMemoria {
 
       let newCart = {
         id: idCart,
+        timestampCart: timestampCart,
         productos: [],
       };
       this.cartsList.push(newCart);
