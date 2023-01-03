@@ -7,7 +7,7 @@ import { modelProduct } from '../models/modelProductos.js';
 async function connectMG() {
   try {
     await connect(
-      'mongodb+srv://carlaRicciardi:mongoatlas123@cluster0.tdnzcdj.mongodb.net/?retryWrites=true&w=majority',
+      'mongodb+srv://carlaRicciardi:mongoatlas123@cluster0.uzjmdzn.mongodb.net/?retryWrites=true&w=majority',
       { useNewUrlParser: true }
     );
   } catch (e) {
@@ -34,14 +34,15 @@ class ContenedorMongoDB {
 
   async getAll() {
     const result = await this.model.find({});
+    console.log(result)
     return result;
   }
 
-  async getById(id) {
+  async getById(num) {
     const lista = await this.model.find({});
     const validacion = validacionId(lista, num);
     if (validacion) {
-      let result = await this.model.find({ _id: id });
+      let result = await this.model.find({ _id: num });
       result = result[0];
       return result;
     } else {

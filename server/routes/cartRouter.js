@@ -32,15 +32,14 @@ cartRouter.post('/:id/productos/:id_prod', async (req, res) => {
   try {
     let { id_prod } = req.params;
     let { id } = req.params;
+    //console.log(id, id_prod)
     let productAddedCart = await product.getById(id_prod, 'products');
+    // console.log(productAddedCart)
     if (
-      (await cart.getById(id, 'carts')) ==
-      'No existe el número de id elegido'
+      (await cart.getById(id, 'carts')) == 'No existe el número de id elegido'
     ) {
       res.json('error: "No existe ningún carrito con ese número de id"');
-    } else if (
-      productAddedCart == 'No existe el número de id elegido'
-    ) {
+    } else if (productAddedCart == 'No existe el número de id elegido') {
       res.json('error: "No existe ningún producto con ese número de id"');
     } else {
       cart.addProductToCart(id, productAddedCart);
@@ -62,7 +61,9 @@ cartRouter.delete('/:id/productos/:id_prod', async (req, res) => {
     let { id_prod } = req.params;
     let { id } = req.params;
     let productoCarrito = await product.getById(id_prod, 'products');
-    if ((await cart.getById(id, 'carts')) == 'No existe el número de id elegido') {
+    if (
+      (await cart.getById(id, 'carts')) == 'No existe el número de id elegido'
+    ) {
       res.json('error: "No existe ningún carrito con ese número de id"');
     } else if (productoCarrito == 'No existe el número de id elegido') {
       res.json('error: "No existe ningún producto con ese número de id"');
@@ -70,8 +71,8 @@ cartRouter.delete('/:id/productos/:id_prod', async (req, res) => {
       await cart.deleteProductFromCart(id, id_prod);
       res.json(`Se eliminó el producto del carrito`);
     }
-  } catch (e){
-    console.log(e)
+  } catch (e) {
+    console.log(e);
     res.json('error');
   }
 });

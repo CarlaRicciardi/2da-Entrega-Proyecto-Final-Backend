@@ -1,40 +1,6 @@
 [
   {
     "id": 1,
-    "productos": [
-      {
-        "name": "banana",
-        "id": 2,
-        "description": "amarilla",
-        "cod": 124,
-        "img": "bla",
-        "price": 30,
-        "stock": 500
-      },
-      {
-        "id": 3,
-        "timestamp": "31 / 12 / 2022, 2:38:48",
-        "name": "anana",
-        "description": "amarillo",
-        "cod": 124,
-        "img": "bla",
-        "price": 200,
-        "stock": 20
-      },
-      {
-        "id": 3,
-        "timestamp": "31 / 12 / 2022, 2:38:48",
-        "name": "anana",
-        "description": "amarillo",
-        "cod": 124,
-        "img": "bla",
-        "price": 200,
-        "stock": 20
-      }
-    ]
-  },
-  {
-    "id": 2,
     "timestampCart": "31 / 12 / 2022, 10:31:34",
     "productos": [
       {
@@ -47,7 +13,7 @@
         "stock": 500
       },
       {
-        "id": "1",
+        "id": 2,
         "timestamp": "31 / 12 / 2022, 2:41:06",
         "name": "cereza",
         "description": "roja",
@@ -55,9 +21,24 @@
         "img": "bla",
         "price": 300,
         "stock": 50
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "timestampCart": "31 / 12 / 2022, 10:35:34",
+    "productos": [
+      {
+        "name": "banana",
+        "id": 2,
+        "description": "amarilla",
+        "cod": 124,
+        "img": "bla",
+        "price": 30,
+        "stock": 500
       },
       {
-        "id": "1",
+        "id": 2,
         "timestamp": "31 / 12 / 2022, 2:41:06",
         "name": "cereza",
         "description": "roja",

@@ -110,7 +110,7 @@ class ContenedorFirebase {
   async getProductsFromCart(idCart) {
     let result = await this.collection.doc(idCart).get();
     result = result.data();
-    return result.productos;
+    return result?.productos;
   }
 
   async addProductToCart(num, product, id_prod) {
