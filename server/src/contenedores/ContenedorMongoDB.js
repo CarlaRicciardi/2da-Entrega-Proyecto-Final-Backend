@@ -34,7 +34,7 @@ class ContenedorMongoDB {
 
   async getAll() {
     const result = await this.model.find({});
-    console.log(result)
+    console.log(result);
     return result;
   }
 
@@ -133,6 +133,7 @@ class ContenedorMongoDB {
 
   async addProductToCart(id, product) {
     const lista = await this.model.find({});
+    console.log(lista);
     const index = lista.findIndex((object) => object.id == num);
     lista[index].productos.push(product);
     await this.model.updateOne(

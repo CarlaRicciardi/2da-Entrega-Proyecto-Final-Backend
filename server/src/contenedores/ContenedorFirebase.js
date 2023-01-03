@@ -113,11 +113,11 @@ class ContenedorFirebase {
     return result?.productos;
   }
 
-  async addProductToCart(num, product, id_prod) {
+  async addProductToCart(num, productAddedCart, id_prod) {
     let result = await this.collection.doc(num).get();
     result = result.data();
-    product['id'] = id_prod;
-    result.productos.push(product);
+    productAddedCart['id'] = id_prod;
+    result.productos.push(productAddedCart);
     await this.collection.doc(num).update({
       productos: result.productos,
     });

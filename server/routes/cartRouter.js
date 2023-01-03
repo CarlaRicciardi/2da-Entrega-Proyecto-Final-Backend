@@ -32,9 +32,7 @@ cartRouter.post('/:id/productos/:id_prod', async (req, res) => {
   try {
     let { id_prod } = req.params;
     let { id } = req.params;
-    //console.log(id, id_prod)
     let productAddedCart = await product.getById(id_prod, 'products');
-    // console.log(productAddedCart)
     if (
       (await cart.getById(id, 'carts')) == 'No existe el número de id elegido'
     ) {
@@ -42,8 +40,10 @@ cartRouter.post('/:id/productos/:id_prod', async (req, res) => {
     } else if (productAddedCart == 'No existe el número de id elegido') {
       res.json('error: "No existe ningún producto con ese número de id"');
     } else {
-      cart.addProductToCart(id, productAddedCart);
-      res.json(`Se añadio el producto ${productAddedCart.name} al carrito`);
+      cart.addProductToCart(id, productAddedCart, id_prod);
+      res.json(
+        `Se añadio el producto ${productAddedCart.name} al carrito ${id}`
+      );
     }
   } catch {
     res.json('error');
