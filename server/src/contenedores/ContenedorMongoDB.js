@@ -3,7 +3,6 @@ import { connect } from 'mongoose';
 import { modelCart } from '../models/modelCarritos.js';
 import { modelProduct } from '../models/modelProductos.js';
 
-//la conexion a mongo esta en index para que lo lea primero el server
 async function connectMG() {
   try {
     await connect(
@@ -34,7 +33,7 @@ class ContenedorMongoDB {
 
   async getAll() {
     const result = await this.model.find({});
-    console.log(result);
+    console.log("result:", result);
     return result;
   }
 
