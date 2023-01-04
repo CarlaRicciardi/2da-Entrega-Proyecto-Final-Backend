@@ -6,9 +6,11 @@ import { modelProduct } from '../models/modelProductos.js';
 async function connectMG() {
   try {
     await connect(
-      'mongodb+srv://carlaRicciardi:mongoatlas123@cluster0.uzjmdzn.mongodb.net/?retryWrites=true&w=majority',
+      //agregue /frutas para indicar que bdd usar!
+      'mongodb+srv://carlaRicciardi:mongoatlas123@cluster0.uzjmdzn.mongodb.net/frutas?retryWrites=true&w=majority',
       { useNewUrlParser: true }
     );
+    console.log('me conecte a MONGOOO');
   } catch (e) {
     console.log(e);
     throw 'can not connect to the db';
@@ -33,7 +35,6 @@ class ContenedorMongoDB {
 
   async getAll() {
     const result = await this.model.find({});
-    console.log("result:", result);
     return result;
   }
 
@@ -60,8 +61,12 @@ class ContenedorMongoDB {
         price: price,
         stock: stock,
       });
-      await newProduct.save();
+      // console.log("newModel::", newProduct )
+      const productSaved = await newProduct.save();
+      console.log('productSaved:', productSaved);
+
       const aux = await modelProduct.find({ name: name });
+      // console.log(aux)
       const id = aux[0]._id;
       return id;
     } catch {
@@ -132,7 +137,6 @@ class ContenedorMongoDB {
 
   async addProductToCart(id, product) {
     const lista = await this.model.find({});
-    console.log(lista);
     const index = lista.findIndex((object) => object.id == num);
     lista[index].productos.push(product);
     await this.model.updateOne(

@@ -39,7 +39,6 @@ productsRouter.get('/:id?', async (req, res) => {
 // POST '/api/productos' -> incorpora productos al listado (solo admins)
 productsRouter.post('/', middlewareAdmin, async (req, res) => {
   const { body } = req;
-  console.log(body);
   const timestamp = moment().format('DD / MM / YYYY, h:mm:ss');
   try {
     let addProduct = await products.save(
@@ -51,7 +50,9 @@ productsRouter.post('/', middlewareAdmin, async (req, res) => {
       body.price,
       body.stock
     );
-    res.json({ success: true, addProduct });
+    console.log("addProduct:", addProduct) //ACA ESTA EL ERROR!!! 
+    res.json({ addProduct });
+    // console.log("addProduct:", addProduct)
   } catch {
     res.json({ error: true, msg: 'No se pudo guardar el producto' });
   }

@@ -46,7 +46,6 @@ class ContenedorArchivo {
         stock: stock,
       };
       lista.push(newProduct);
-      console.log(lista);
       await fs.promises.writeFile(this.ruta, JSON.stringify(lista));
       return id;
     } catch (error) {
@@ -142,9 +141,7 @@ class ContenedorArchivo {
 
   async addProductToCart(idCart, product) {
     const allCarts = JSON.parse(fs.readFileSync(this.ruta));
-    console.log(allCarts);
     const index = allCarts.findIndex((object) => object.id == idCart);
-    console.log(index);
     allCarts[index].productos.push(product);
     await fs.promises.writeFile(this.ruta, JSON.stringify(allCarts));
   }

@@ -8,5 +8,6 @@ const ProductoSchema = new Schema({
   price: { type: Number, require: true },
   stock: { type: Number, require: true },
 });
-
+//                                 nombre de la coleccion (no de la base de datos!!)
 export const modelProduct = model('products', ProductoSchema);
+
