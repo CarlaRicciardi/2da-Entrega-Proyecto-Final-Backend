@@ -1,13 +1,13 @@
-import ContenedorMongoDB from '../../contenedores/ContenedorMongoDB.js';
-import {modelProduct} from '../../models/modelProductos.js';
+const contenedorMongoDB = require('../../contenedores/ContenedorMongoDB.js');
+const modelProduct = require('../../models/modelProductos.js');
 
-class ProductosDaoMongoDB extends ContenedorMongoDB {
+class ProductosDaoMongoDB extends contenedorMongoDB {
   constructor() {
     super({
-      name: 'products',
-      schema: modelProduct.ProductoSchema
+      name: 'products', //name collection
+      schema: modelProduct.ProductsSchema,
     });
   }
 }
 
-export default ProductosDaoMongoDB;
+module.exports = ProductosDaoMongoDB;

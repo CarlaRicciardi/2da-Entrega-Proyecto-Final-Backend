@@ -1,23 +1,6 @@
-import mongoose from 'mongoose';
-import { connect } from 'mongoose';
-import { modelCart } from '../models/modelCarritos.js';
-import { modelProduct } from '../models/modelProductos.js';
-
-async function connectMG() {
-  try {
-    await connect(
-      //agregue /frutas para indicar que bdd usar!
-      'mongodb+srv://carlaRicciardi:mongoatlas123@cluster0.uzjmdzn.mongodb.net/frutas?retryWrites=true&w=majority',
-      { useNewUrlParser: true }
-    );
-    console.log('me conecte a MONGOOO');
-  } catch (e) {
-    console.log(e);
-    throw 'can not connect to the db';
-  }
-}
-
-await connectMG();
+const { modelCart } = require('../models/modelCarritos.js');
+const { modelProduct } = require('../models/modelProductos.js');
+const mongoose = require('mongoose');
 
 function validacionId(array, id) {
   const index = array.findIndex((object) => object.id == id);
@@ -50,22 +33,19 @@ class ContenedorMongoDB {
     }
   }
 
-  async save(timestamp, name, description, cod, img, price, stock) {
+  async save(timestamp, title, price, thumbnail) {
     try {
       const newProduct = new modelProduct({
         timestamp: timestamp,
-        name: name,
-        description: description,
-        cod: cod,
-        img: img,
+        title: title,
         price: price,
-        stock: stock,
+        thumbnail: thumbnail,
       });
       // console.log("newModel::", newProduct )
       const productSaved = await newProduct.save();
       console.log('productSaved:', productSaved);
 
-      const aux = await modelProduct.find({ name: name });
+      const aux = await modelProduct.find({ title: title });
       // console.log(aux)
       const id = aux[0]._id;
       return id;
@@ -75,7 +55,7 @@ class ContenedorMongoDB {
     }
   }
 
-  async update(id, timestamp, name, description, cod, img, price, stock) {
+  async update(id, timestamp, title, price, thumbnail) {
     const lista = await modelProduct.find({});
     const validacion = validacionId(lista, id);
     if (validacion) {
@@ -86,12 +66,9 @@ class ContenedorMongoDB {
         {
           $set: {
             timestamp: timestamp,
-            name: name,
-            description: description,
-            cod: cod,
-            img: img,
+            title: title,
             price: price,
-            stock: stock,
+            thumbnail: thumbnail,
           },
         }
       );
@@ -113,14 +90,14 @@ class ContenedorMongoDB {
     }
   }
   //vos agregas eltimestamp como parametro.. que pongo si no lo tengo?
-  async newCart(timestamp) {
+  async newCart(username) {
     try {
       const newCart = new modelCart({
-        timestamp: timestamp,
+        username: username,
         productos: [],
       });
       await newCart.save();
-      const aux = await modelCart.find({ timestamp: timestamp });
+      const aux = await modelCart.find({ username: uxsername });
       const id = aux[0]._id;
       return id;
     } catch {
@@ -131,13 +108,14 @@ class ContenedorMongoDB {
 
   async getProductsFromCart(idCart) {
     const lista = await this.model.find({});
+    // console.log("lista:" , lista) // lista me trae object object en productos
     const index = lista.findIndex((object) => object.id == idCart);
     return lista[index].productos;
   }
 
   async addProductToCart(id, product) {
     const lista = await this.model.find({});
-    const index = lista.findIndex((object) => object.id == num);
+    const index = lista.findIndex((object) => object.id == id);
     lista[index].productos.push(product);
     await this.model.updateOne(
       { _id: id },
@@ -167,4 +145,4 @@ class ContenedorMongoDB {
   }
 }
 
-export default ContenedorMongoDB;
+module.exports = ContenedorMongoDB;

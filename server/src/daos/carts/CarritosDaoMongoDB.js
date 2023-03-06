@@ -1,13 +1,13 @@
-import ContenedorMongoDB from '../../contenedores/ContenedorMongoDB.js';
-import { modelCart } from '../../models/modelCarritos.js';
+const contenedorMongoDB = require('../../contenedores/ContenedorMongoDB.js');
+const modelCart = require('../../models/modelCarritos.js');
 
-class CarritosDaoMongoDB extends ContenedorMongoDB {
+class CarritosDaoMongoDB extends contenedorMongoDB {
   constructor() {
     super({
-      name: 'carts', //nombre coleccion
-      schema: modelCart.CarritoSchema
+      name: 'carts', //name collection
+      schema: modelCart.CartsSchema,
     });
   }
 }
 
-export default CarritosDaoMongoDB;
+module.exports = CarritosDaoMongoDB;

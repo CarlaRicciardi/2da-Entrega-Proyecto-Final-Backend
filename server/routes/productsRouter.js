@@ -1,10 +1,9 @@
-import express from 'express';
+const express = require('express');
 const { Router } = express;
 const productsRouter = Router();
-import moment from 'moment';
-
-import instancia from '../src/daos/index.js';
-const products = new instancia.producto();
+const ProductosDaoMongoDB = require('../src/daos/products/ProductosDaoMongoDB.js');
+const contenedorProd = new ProductosDaoMongoDB();
+const moment = require('moment/moment.js');
 
 //middleware
 let isAdmin = true;
@@ -20,18 +19,19 @@ const middlewareAdmin = (req, res, next) => {
 };
 
 productsRouter.get('/', async (req, res) => {
-  const productsList = await products.getAll('products');
-  res.json(productsList);
+  const productsList = await contenedorProd.getAll('products');
+  // res.json(productsList);
+  res.render('productsList', {productsList})
 });
 
 // GET '/api/productos' -> muestra todos los productos o o devuelve un producto segun id.
 productsRouter.get('/:id?', async (req, res) => {
   const { id } = req.params;
   if (id) {
-    const productsList = await products.getById(id, 'products');
+    const productsList = await contenedorProd.getById(id, 'products');
     res.json({ products: productsList });
   } else {
-    const productsList = await products.getAll('products');
+    const productsList = await contenedorProd.getAll('products');
     res.json({ productsList });
   }
 });
@@ -41,16 +41,13 @@ productsRouter.post('/', middlewareAdmin, async (req, res) => {
   const { body } = req;
   const timestamp = moment().format('DD / MM / YYYY, h:mm:ss');
   try {
-    let addProduct = await products.save(
+    let addProduct = await contenedorProd.save(
       timestamp,
-      body.name,
-      body.description,
-      body.cod,
-      body.img,
+      body.title,
       body.price,
-      body.stock
+      body.thumbnail
     );
-    console.log("addProduct:", addProduct) //ACA ESTA EL ERROR!!! 
+    console.log('addProduct:', addProduct);
     res.json({ addProduct });
     // console.log("addProduct:", addProduct)
   } catch {
@@ -66,15 +63,12 @@ productsRouter.put('/:id', middlewareAdmin, async (req, res) => {
   console.log(body);
   const timestamp = moment().format('DD / MM / YYYY, h:mm:ss');
   try {
-    let updateProduct = await products.update(
+    let updateProduct = await contenedorProd.update(
       id,
       timestamp,
-      body.name,
-      body.description,
-      body.cod,
-      body.img,
+      body.title,
       body.price,
-      body.stock
+      body.thumbnail
     );
     res.json({ updated: updateProduct });
   } catch (e) {
@@ -82,16 +76,17 @@ productsRouter.put('/:id', middlewareAdmin, async (req, res) => {
     res.json({ error: true });
   }
 });
+//NO SE ACTUALIZA, ME DEVUELVE EL PRODUCTO POR CONSOLA PERO ME DICE QUE ES UNDEFINED EN POSTMAN
 
 // DELETE '/api/productos/:id' -> elimina un producto según su id. (solo admins)
 productsRouter.delete('/:id', middlewareAdmin, async (req, res) => {
   let { id } = req.params;
   try {
-    const result = await products.deleteById(id, 'products');
+    const result = await contenedorProd.deleteById(id, 'products');
     res.json(result);
   } catch (e) {
     res.json({ error: true, msg: 'producto no encontrado' });
   }
 });
 
-export default productsRouter;
+module.exports = productsRouter;

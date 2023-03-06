@@ -1,21 +1,23 @@
-import express from 'express';
+const express = require('express');
 const { Router } = express;
 const cartRouter = Router();
-import moment from 'moment';
+const moment = require('moment');
 
-import instancia from '../src/daos/index.js';
-const cart = new instancia.carrito();
-const product = new instancia.producto();
+const CarritosDaoMongoDB = require('../src/daos/carts/CarritosDaoMongoDB.js');
+const contenedorCarrito = new CarritosDaoMongoDB();
+const ProductosDaoMongoDB = require('../src/daos/products/ProductosDaoMongoDB.js');
+const contenedorProd = new ProductosDaoMongoDB();
 
 cartRouter.get('/', async (req, res) => {
-  const lista = await cart.getAll('carts');
+  const lista = await contenedorCarrito.getAll('carts');
   res.json(lista);
 });
+//ME DEVUELVE UN ARRAY VACIO EN LOS PRODUCTOS...
 
 cartRouter.post('/', async (req, res) => {
   try {
     const timestampCart = moment().format('DD / MM / YYYY, h:mm:ss');
-    let idCart = await cart.newCart(timestampCart);
+    let idCart = await contenedorCarrito.newCart(timestampCart);
     res.json(`Se creo un carrito nuevo con id ${idCart}`);
   } catch {
     res.json('error!');
@@ -24,7 +26,7 @@ cartRouter.post('/', async (req, res) => {
 
 cartRouter.get('/:id/productos', async (req, res) => {
   const { id } = req.params;
-  const allProductsFromCart = await cart.getProductsFromCart(id);
+  const allProductsFromCart = await contenedorCarrito.getProductsFromCart(id);
   res.json(allProductsFromCart);
 });
 
@@ -32,7 +34,7 @@ cartRouter.post('/:id/productos/:id_prod', async (req, res) => {
   try {
     let { id_prod } = req.params;
     let { id } = req.params;
-    let productAddedCart = await product.getById(id_prod, 'products');
+    let productAddedCart = await contenedorProd.getById(id_prod, 'products');
     if (
       (await cart.getById(id, 'carts')) == 'No existe el número de id elegido'
     ) {
@@ -52,7 +54,7 @@ cartRouter.post('/:id/productos/:id_prod', async (req, res) => {
 
 cartRouter.delete('/:id', async (req, res) => {
   let { id } = req.params;
-  const result = await cart.deleteById(id, 'carts');
+  const result = await contenedorProd.deleteById(id, 'carts');
   res.json({ carritoEliminado: id });
 });
 
@@ -60,7 +62,7 @@ cartRouter.delete('/:id/productos/:id_prod', async (req, res) => {
   try {
     let { id_prod } = req.params;
     let { id } = req.params;
-    let productoCarrito = await product.getById(id_prod, 'products');
+    let productoCarrito = await contenedorProd.getById(id_prod, 'products');
     if (
       (await cart.getById(id, 'carts')) == 'No existe el número de id elegido'
     ) {
@@ -77,4 +79,4 @@ cartRouter.delete('/:id/productos/:id_prod', async (req, res) => {
   }
 });
 
-export default cartRouter;
+module.exports = cartRouter;
